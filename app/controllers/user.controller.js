@@ -1,19 +1,23 @@
 const User = require('../models/user.model.js');
+const bcrypt = require('bcrypt');
 
 // Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
-    if ((!req.body.userName)) { //|| (!req.body.password) || (!req.body.email)
+    if ((!req.body.firstName)) { //|| (!req.body.password) || (!req.body.email)
         return res.status(400).send({
             message: "user name, password and email can not be empty"
         });
     }
 
     // Create a User
+    let hash = bcrypt.hashSync(req.body.password, 10);
     const user = new User({
-        userName: req.body.userName,
-        password: req.body.password,
-        email: req.body.email
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: hash,
+        cell: req.body.cell
     });
 
     // Save User in the database
@@ -31,6 +35,9 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     User.find()
         .then(users => {
+            users.forEach(user => {
+                console.log(user);
+            });
             res.send(users);
         }).catch(err => {
             res.status(500).send({
@@ -41,7 +48,8 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a userId
 exports.findOne = (req, res) => {
-    User.findById(req.params.userId)
+    console.log(req.params.userName);
+    User.find({ userName: req.params.userName })
         .then(user => {
             if (!user) {
                 return res.status(404).send({
