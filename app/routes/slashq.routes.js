@@ -1,6 +1,8 @@
 module.exports = (app) => {
     const users = require('../controllers/user.controller.js');
     const Categories = require('../controllers/category.controller.js');
+    const Answers = require('../controllers/answer.controller.js');
+    const Questions = require('../controllers/question.controller.js');
 
     // Create a new User
     app.post('/users', users.create);
