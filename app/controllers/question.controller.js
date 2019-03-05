@@ -1,4 +1,4 @@
-const Question = require('../models/answer.model');
+const Question = require('../models/question.model');
 
 // Create and Save a new User
 exports.create = (req, res) => {
