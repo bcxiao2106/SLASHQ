@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const users = require('../controllers/user.controller.js');
+    const Categories = require('../controllers/category.controller.js');
 
     // Create a new User
     app.post('/users', users.create);
@@ -15,4 +16,7 @@ module.exports = (app) => {
 
     // Delete a User with UserId
     app.delete('/users/:userId', users.delete);
+
+    // Retrieve all Users
+    app.get('/categories', Categories.findAll);
 }
