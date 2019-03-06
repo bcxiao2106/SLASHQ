@@ -1,8 +1,11 @@
 const express = require('express'); // a web framework of Node.js
+const cors = require('cors');
 const bodyParser = require('body-parser'); // body-parser is a module that parses the request (of various content types) and creates a req.body object that we can access in our routes.
 
 // create express app
 const app = express();
+app.use(cors());
+console.log('CORS is enabled');
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
