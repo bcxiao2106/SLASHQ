@@ -45,6 +45,9 @@ module.exports = (app) => {
     // Retrieve a single Answer with sid
     app.get('/answers/:sid', Answers.findOne);
 
+    // Retrieve a single Answer with qid
+    app.get('/answers/Q/:qid', Answers.findByQuestionId);
+
     // Update a Answer with sid
     app.put('/answers/:sid', Answers.update);
 

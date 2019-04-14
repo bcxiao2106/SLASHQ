@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     // Create a Category
     const answer = new Answer({
-        cid: req.body.cid,
+        sid: req.body.sid,
         qid: req.body.qid,
         solutionDetails: req.body.solutionDetails
     });
@@ -44,26 +44,49 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a userId
 exports.findOne = (req, res) => {
-    console.log(req.params.cid);
-    Answer.find({ cid: req.params.cid })
+    console.log(req.params.sid);
+    Answer.find({ sid: req.params.sid })
         .then(answer => {
             if (!answer) {
                 return res.status(404).send({
-                    message: "User not found with id " + req.params.cid
+                    message: "User not found with id " + req.params.sid
                 });
             }
             res.send(answer);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Category not found with id " + req.params.cid
+                    message: "Category not found with id " + req.params.sid
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving user with id " + req.params.cid
+                message: "Error retrieving user with id " + req.params.sid
             });
         });
 };
+
+//Find answers by questionId
+exports.findByQuestionId = (req, res) => {
+    console.log(req.params.qid);
+    Answer.find({ qid: req.params.qid })
+        .then(answer => {
+            if (!answer) {
+                return res.status(404).send({
+                    message: "User not found with id " + req.params.qid
+                });
+            }
+            res.send(answer);
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Category not found with id " + req.params.qid
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving user with id " + req.params.qid
+            });
+        });
+}
 
 // Update a user identified by the userId in the request
 exports.update = (req, res) => {
@@ -82,40 +105,40 @@ exports.update = (req, res) => {
         .then(answer => {
             if (!answer) {
                 return res.status(404).send({
-                    message: "User not found with id " + req.params.cid
+                    message: "User not found with id " + req.params.sid
                 });
             }
             res.send(answer);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "User not found with id " + req.params.cid
+                    message: "User not found with id " + req.params.sid
                 });
             }
             return res.status(500).send({
-                message: "Error updating user with id " + req.params.cid
+                message: "Error updating user with id " + req.params.sid
             });
         });
 };
 
 // Delete a user with the specified userId in the request
 exports.delete = (req, res) => {
-    Answer.findByIdAndRemove(req.params.cid)
+    Answer.findByIdAndRemove(req.params.sid)
         .then(answer => {
             if (!answer) {
                 return res.status(404).send({
-                    message: "Answer not found with id " + req.params.cid
+                    message: "Answer not found with id " + req.params.sid
                 });
             }
             res.send({ message: "Answer deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Answer not found with id " + req.params.cid
+                    message: "Answer not found with id " + req.params.sid
                 });
             }
             return res.status(500).send({
-                message: "Could not delete user with id " + req.params.cid
+                message: "Could not delete user with id " + req.params.sid
             });
         });
 };
