@@ -10,7 +10,7 @@ exports.create = (req, res) => {
         });
     }
 
-    var qid = Question.findOne().sort(-qid).qid + 1;
+    var qid = parseInt(Question.findOne().sort(-qid).qid) + 1;
 
     // Create a Question
     const question = new Question({
