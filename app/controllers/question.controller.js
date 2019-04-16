@@ -2,16 +2,19 @@ const Question = require('../models/question.model');
 
 // Create and Save a new User
 exports.create = (req, res) => {
+
     // Validate request
-    if ((!req.body.qid)) { //|| (!req.body.password) || (!req.body.email)
+    if ((!req.body.questionTitle)) { //|| (!req.body.password) || (!req.body.email)
         return res.status(400).send({
-            message: "qid and questionTitle can not be empty"
+            message: "questionTitle can not be empty"
         });
     }
 
+    var qid = Question.findOne().sort(-qid).qid + 1;
+
     // Create a Question
     const question = new Question({
-        qid: req.body.qid,
+        qid: qid,
         cid: req.body.cid,
         questionTitle: req.body.questionTitle,
         questionDesc: req.body.questionDesc
